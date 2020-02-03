@@ -1,0 +1,21 @@
+题目 给一个二叉树的前序遍历和中旭遍历，重建该二叉树
+
+思路1：
+	前序遍历的第一个数字就是根节点，从而可以在中序遍历中找到根节点，中序遍历根节点左边就是左子树，右边就是右子树。递归上述过程。
+代码：
+	import java.util.*;
+	public class Solution {
+	    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+		if(pre.length==0||in.length==0)
+		    return null;
+		TreeNode root = new TreeNode(pre[0]);
+		for(int i = 0;i < pre.length;i++){
+		    if(in[i]==pre[0]){
+			root.left = reConstructBinaryTree(Arrays.copyOfRange(pre,1,i+1),Arrays.copyOfRange(in,0,i));
+			root.right = reConstructBinaryTree(Arrays.copyOfRange(pre,i+1,pre.length),Arrays.copyOfRange(in,i+1,in.length));
+			
+		    }
+		}
+		return root;
+	    }
+	}
